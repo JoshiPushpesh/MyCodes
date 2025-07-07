@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #links{
+    display: flex;
+    font-size: 30px;
+    height: 50px;
+    width: 50%;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 2px 2px 2px 2px rgb(229, 229, 229);
+    margin-bottom: 30px;
+    margin-left: 30px
+}
+thead>tr>th{
+    font-size: 30px;
+    justify-content: space-between;
+    background-color: teal;
+  align-items: center;
+   
+  }
+    </style>
+</head>
+<body>
+    <div id="links">
+        <div><a href="index.html">Home</a></div>
+        <div><a href="applied.html">Applied Jobs</a></div>
+        <div><a href="bookmark.html">Bookmarks</a></div>
+        </div>
+
+        <main>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Job Applied</th>
+                        <th>Delete Bookmark</th>
+                    </tr>
+                </thead>
+                <tbody id="body">
+
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </main>
+</body>
+<script>
+    let bookMarkDataFromLs = JSON.parse(
+        localStorage.getItem("bookMarkData"))
+        displyTable(bookMarkDataFromLs);
+        function displyTable(bookMarkDataFromLs){
+            bookMarkDataFromLs.forEach(function(elem,index){
+        let tr = document.createElement("tr")
+
+let td1 = document.createElement("td")
+td1.innerText = elem.personName;
+let td2 = document.createElement("td")
+td2.innerText = elem.personEmail;
+let td3 = document.createElement("td")
+td3.innerText = elem.personRole;
+let td4 = document.createElement("td")
+td4.innerText = "Delete"
+td4.style.backgroundColor = "red";
+td4.addEventListener("click",function(){
+    deleteData(index)
+})
+tr.append(td1, td2, td3,td4);
+document.querySelector("tbody").append(tr);
+       })
+        }
+    
+       
+       function deleteData(index){
+        // event.target.parentNode.remove()
+
+bookMarkDataFromLs.splice(index,1);
+localStorage.setItem("bookMarkData",JSON.stringify(bookMarkDataFromLs))
+// window.location.reload();
+displyTable(bookMarkDataFromLs);
+       }
+</script>
+</html>

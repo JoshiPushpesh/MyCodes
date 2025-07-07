@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="commonStyle.css">
+    <style>
+        tbody>tr>td:last-child {
+            background-color: red;
+            cursor: pointer;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="links">
+        <div><a href="index.html">Home</a></div>
+        <div><a href="applied.html">Applied Jobs</a></div>
+        <div><a href="bookmark.html">Bookmarks</a></div>
+    </div>
+
+    <select id="sortName" onchange="handleNameSort()">
+        <option value="">sort by name</option>
+        <option value="Ascending">Ascending</option>
+        <option value="Descending">Descending</option>
+    </select>
+
+    <select id="sortSalary" onchange="hanndleSalarySort()">
+        <option value="">sort by salary</option>
+        <option value="Ascending">Ascending</option>
+        <option value="Descending">Descending</option>
+    </select>
+
+    <select id="filter" onchange="handleFilter">
+        <option value="">filter by role</option>
+        <option value="Backend">Backend</option>
+        <option value="Frontend">Frontend</option>
+        <option value="FSD">FSD</option>
+    </select>
+
+    <main>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Job applied</th>
+                    <th>Salary expected</th>
+                    <th>Add to bookmark</th>
+                </tr>
+            </thead>
+            <tbody id="body">
+                <!-- Append your output to body -->
+            </tbody>
+        </table>
+    </main>
+</body>
+
+<script>
+    // you need to code here
+    let arrFromLS = JSON.parse(localStorage.getItem("jobData"))
+    console.log(arrFromLS);
+
+    document.querySelector("#filter").addEventListener("click",handleFilter)
+    function handleFilter(){
+        let selected = document.querySelector("#filter").value;
+        let filteredList = arrFromLS.filter(function(elem){
+            return elem.personRole==selected;
+        })
+        displyTable(filteredList);
+    }
+    function handleNameSort(){
+       let selected = document.querySelector("#sortName").value;
+    //    console.log(selected);
+    if(selected=="Ascending"){
+arrFromLS.sort(function(a,b){
+    if(a.personName>b.personName) return 1;
+    if(a.personName<b.personName) return -1;
+    return 0 ;
+})
+displyTable(arrFromLS);
+    }
+    if(selected=="Descending"){
+arrFromLS.sort(function(a,b){
+    if(a.personName<b.personName) return 1;
+    if(a.personName>b.personName) return -1;
+    return 0 ;
+})
+displyTable(arrFromLS);
+    }
+}
+
+function hanndleSalarySort(){
+    let sltSalary = document.querySelector("#sortSalary").value;
+    // console.log(sltSalary);
+    if(sltSalary=="Ascending"){
+arrFromLS.sort(function(a,b){
+    if(a.personSalary>b.personSalary) return 1;
+    if(a.personSalary<b.personSalary) return -1;
+    return 0 ;
+
+})
+displyTable(arrFromLS);
+    }
+
+    if(sltSalary=="Descending"){
+        arrFromLS.sort(function(a,b){
+            if(a.personSalary<b.personSalary) return 1;
+            if(a.personSalary>b.personSalary) return -1;
+            return 0 ;
+        })
+        displyTable(arrFromLS);
+    }
+}
+    
+    let bookmarkArr = JSON.parse(localStorage.getItem("bookMarkData"))||[];
+    displyTable(arrFromLS);
+    function displyTable(arrFromLS) {
+        document.querySelector("tbody").innerHTML="";
+        arrFromLS.forEach(function (elem) {
+            let tr = document.createElement("tr")
+
+            let td1 = document.createElement("td")
+            td1.innerText = elem.personName;
+            let td2 = document.createElement("td")
+            td2.innerText = elem.personEmail;
+            let td3 = document.createElement("td")
+            td3.innerText = elem.personRole;
+            let td4 = document.createElement("td")
+            td4.innerText = elem.personSalary
+            let td5 = document.createElement("td")
+            td5.innerText = "Bookmark"
+            td5.addEventListener("click",function(){
+                bookmarkFun(elem)
+            })
+            tr.append(td1, td2, td3, td4, td5);
+            document.querySelector("tbody").append(tr);
+        })
+        }
+        function bookmarkFun(elem){
+            bookmarkArr.push(elem);
+            localStorage.setItem("bookMarkData",JSON.stringify(bookmarkArr))
+    }
+</script>
+
+</html>
