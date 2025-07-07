@@ -1,50 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="index.css">
+  </head>
+  <body>
+    <div id="container"></div>
+  </body>
+</html>
+<script src="fetch1.js"></script>
 
-</head>
-<body>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
     <div id="links">
-    <div><a href="index.html">Home</a></div>
-    <div><a href="applied.html">Applied Jobs</a></div>
-    <div><a href="bookmark.html">Bookmarks</a></div>
+      <div><a href="index.html">Home</a></div>
+      <div><a href="applied.html">Applied Jobs</a></div>
+      <div><a href="bookmark.html">Bookmarks</a></div>
     </div>
     <form action="" id="form">
-        <h2>Enter your application Details</h2>
-        <input type="text" id="name" name="name" placeholder="Enter name here">
-        <input type="email" id="email" name="email" placeholder="Enter email">
-        <select name="role" id="role">
-            <option value="FSD">FSD</option>
-            <option value="Backend">Backend</option>
-            <option value="Frontend">Frontend</option>
-        </select>
-        <input type="number"
+      <h2>Enter your application Details</h2>
+      <input type="text" id="name" name="name" placeholder="Enter name here" />
+      <input type="email" id="email" name="email" placeholder="Enter email" />
+      <select name="role" id="role">
+        <option value="FSD">FSD</option>
+        <option value="Backend">Backend</option>
+        <option value="Frontend">Frontend</option>
+      </select>
+      <input
+        type="number"
         id="salary"
-        placeholder="Enter Expected salary in lakh per annum">
-        <input type="submit" id="submit" name="submit" value="submit">
-
+        placeholder="Enter Expected salary in lakh per annum"
+      />
+      <input type="submit" id="submit" name="submit" value="submit" />
     </form>
-</body>
+  </body>
 
-<script>
-    document.querySelector("form").addEventListener("submit",myJobAppSubmit);
-   let jobArr=JSON.parse(localStorage.getItem("jobData"))||[]
-    function myJobAppSubmit(){
-        event.preventDefault()
+  <script>
+    document.querySelector("form").addEventListener("submit", myJobAppSubmit);
+    let jobArr = JSON.parse(localStorage.getItem("jobData")) || [];
+    function myJobAppSubmit() {
+      event.preventDefault();
 
-        let jobObj = {
-        personName:document.querySelector("#name").value,
-        personEmail:document.querySelector("#email").value,
-        personRole:document.querySelector("#role").value,
-        personSalary:document.querySelector("#salary").value
-        }
-        jobArr.push(jobObj)
-        // console.log(jobArr)
-        localStorage.setItem("jobData",JSON.stringify(jobArr));
-}
-</script>
+      let jobObj = {
+        personName: document.querySelector("#name").value,
+        personEmail: document.querySelector("#email").value,
+        personRole: document.querySelector("#role").value,
+        personSalary: document.querySelector("#salary").value,
+      };
+      jobArr.push(jobObj);
+      // console.log(jobArr)
+      localStorage.setItem("jobData", JSON.stringify(jobArr));
+    }
+  </script>
 </html>
